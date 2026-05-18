@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu Grupo de Compras</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+  :root {
+    --bg: #F7F5F0;
+    --surface: #FFFFFF;
+    --surface2: #F0EDE6;
+    --border: rgba(0,0,0,0.1);
+    --border-strong: rgba(0,0,0,0.18);
+    --text: #1A1916;
+    --text-2: #5C5A55;
+    --text-3: #9A9891;
+    --green: #1D9E75;
+    --green-bg: #E1F5EE;
+    --green-text: #085041;
+    --amber: #B87010;
+    --amber-bg: #FEF3DC;
+    --amber-text: #7A4A08;
+    --red: #C13030;
+    --red-bg: #FDEAEA;
+    --red-text: #8B1F1F;
+    --blue: #2563EB;
+    --blue-bg: #EFF6FF;
+    --blue-text: #1E40AF;
+    --radius: 10px;
+    --radius-lg: 16px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05);
+    --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 15px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: -0.3px;
+  }
+
+  .logo-icon {
+    width: 32px; height: 32px;
+    background: var(--green);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    font-size: 16px;
+  }
+
+  .nav-tabs {
+    display: flex;
+    background: var(--surface2);
+    border-radius: var(--radius);
+    padding: 3px;
+    gap: 2px;
+  }
+
+  .nav-tab {
+    padding: 6px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--text-2);
+    transition: all 0.15s;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .nav-tab.active {
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  .header-right {
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .btn-primary {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--green);
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.88; }
+
+  /* ── MAIN ── */
+  main { max-width: 1140px; margin: 0 auto; padding: 28px 20px; }
+
+  /* ── STATS ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+  }
+
+  .stat-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .stat-label { font-size: 12px; color: var(--text-3); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .stat-value { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; }
+  .stat-sub { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+
+  /* ── ALERT ── */
+  .alert {
+    background: var(--amber-bg);
+    border: 1px solid rgba(184,112,16,0.2);
+    color: var(--amber-text);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    font-size: 13px;
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  /* ── TOOLBAR ── */
+  .toolbar {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+  }
+  .search-wrap i {
+    position: absolute; left: 11px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-3);
+    font-size: 16px;
+  }
+  .search-input {
+    width: 100%;
+    padding: 9px 12px 9px 34px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .search-input:focus { border-color: var(--green); }
+
+  .filter-sel {
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    cursor: pointer;
+    min-width: 150px;
+  }
+  .filter-sel:focus { border-color: var(--green); }
+
+  /* ── TABLE ── */
+  .table-wrap {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+  thead tr { background: var(--surface2); }
+  th {
+    padding: 11px 14px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: #FAFAF8; }
+
+  .td-foto { width: 50px; }
+  .td-nome { min-width: 140px; }
+  .td-item { min-width: 160px; }
+  .td-valor { width: 100px; white-space: nowrap; }
+  .td-chegou { width: 110px; white-space: nowrap; }
+  .td-prazo { width: 160px; }
+  .td-status { width: 120px; }
+  .td-acao { width: 80px; }
+
+  .avatar {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--blue-bg);
+    color: var(--blue-text);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 7px;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+
+  .thumb-wrap {
+    width: 34px; height: 34px;
+    border-radius: 7px;
+    overflow: hidden;
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-3);
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge-green { background: var(--green-bg); color: var(--green-text); }
+  .badge-amber { background: var(--amber-bg); color: var(--amber-text); }
+  .badge-red   { background: var(--red-bg);   color: var(--red-text);   }
+  .badge-gray  { background: var(--surface2); color: var(--text-2); }
+
+  .prazo-label { font-size: 11px; font-weight: 500; margin-bottom: 4px; }
+  .prazo-bar { height: 3px; border-radius: 2px; background: var(--surface2); }
+  .prazo-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
+
+  .mono { font-family: 'DM Mono', monospace; font-size: 12px; }
+
+  .action-btn {
+    width: 28px; height: 28px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 7px;
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    color: var(--text-2);
+    transition: all 0.15s;
+  }
+  .action-btn:hover { background: var(--surface2); color: var(--text); }
+  .action-btn.danger:hover { background: var(--red-bg); color: var(--red); border-color: rgba(193,48,48,0.2); }
+
+  .item-nome { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 180px; display: block; }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    text-align: center;
+    padding: 52px 20px;
+    color: var(--text-3);
+  }
+  .empty-state i { font-size: 36px; display: block; margin-bottom: 10px; }
+  .empty-state p { font-size: 14px; }
+
+  /* ── MODAL ── */
+  .overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 200;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 60px 16px;
+    backdrop-filter: blur(2px);
+  }
+
+  .modal {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 500px;
+    box-shadow: var(--shadow-lg);
+    animation: slideUp 0.2s ease;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(16px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+
+  .modal-header {
+    padding: 20px 22px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .modal-title { font-size: 16px; font-weight: 600; }
+  .modal-close {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    color: var(--text-2);
+    transition: all 0.15s;
+  }
+  .modal-close:hover { background: var(--surface2); }
+
+  .modal-body { padding: 20px 22px; }
+  .modal-footer {
+    padding: 14px 22px 20px;
+    display: flex; justify-content: flex-end; gap: 8px;
+  }
+
+  .form-row { margin-bottom: 14px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  .form-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-2); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--green); }
+  .form-textarea { resize: vertical; min-height: 70px; }
+
+  .upload-area {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    position: relative;
+  }
+  .upload-area:hover { border-color: var(--green); }
+  .upload-area input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .upload-area i { font-size: 24px; color: var(--text-3); display: block; margin-bottom: 6px; }
+  .upload-area p { font-size: 12px; color: var(--text-3); }
+  .upload-area .preview { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; margin: 0 auto 6px; display: none; }
+
+  .btn-cancel {
+    padding: 8px 18px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-2);
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .btn-cancel:hover { background: var(--surface2); }
+
+  /* ── VIEW PÚBLICA ── */
+  #view-public { display: none; }
+
+  .pub-header {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    padding: 22px 24px;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 16px;
+    box-shadow: var(--shadow);
+  }
+  .pub-header-icon {
+    width: 48px; height: 48px;
+    background: var(--green-bg);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    color: var(--green-text);
+    flex-shrink: 0;
+  }
+  .pub-header h2 { font-size: 18px; font-weight: 600; margin-bottom: 2px; }
+  .pub-header p { font-size: 13px; color: var(--text-2); }
+
+  .pub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 14px;
+  }
+
+  .pub-card {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: box-shadow 0.15s;
+  }
+  .pub-card:hover { box-shadow: var(--shadow-lg); }
+
+  .pub-card-photo {
+    height: 120px;
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+    color: var(--text-3);
+    overflow: hidden;
+  }
+  .pub-card-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+  .pub-card-body { padding: 14px 16px; }
+  .pub-card-name { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .pub-card-name span { font-weight: 600; font-size: 14px; }
+  .pub-item-name { font-size: 15px; font-weight: 600; margin-bottom: 10px; line-height: 1.3; }
+
+  .pub-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+  .pub-meta-item { }
+  .pub-meta-label { font-size: 10px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 1px; }
+  .pub-meta-value { font-size: 13px; font-weight: 500; }
+
+  .pub-card-footer {
+    padding: 10px 16px;
+    background: var(--surface2);
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .deadline-info { font-size: 12px; color: var(--text-2); display: flex; align-items: center; gap: 5px; }
+  .deadline-info.urgent { color: var(--red-text); }
+  .deadline-info.warning { color: var(--amber-text); }
+
+  .pub-obs {
+    background: var(--surface2);
+    border-radius: 7px;
+    padding: 7px 10px;
+    font-size: 12px;
+    color: var(--text-2);
+    margin-top: 8px;
+    display: flex; gap: 6px;
+  }
+
+  /* ── LOGIN/SENHA ADMIN ── */
+  .admin-lock {
+    position: fixed; inset: 0;
+    background: var(--bg);
+    z-index: 300;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .login-box {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    padding: 36px;
+    width: 340px;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+  }
+  .login-box h2 { font-size: 20px; font-weight: 600; margin-bottom: 6px; }
+  .login-box p { font-size: 13px; color: var(--text-2); margin-bottom: 24px; }
+  .login-err { color: var(--red); font-size: 12px; margin-top: 8px; display: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    header { padding: 0 14px; }
+    main { padding: 16px 12px; }
+    .td-foto, .td-chegou, .td-valor { display: none; }
+    .logo span { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TELA DE LOGIN ADMIN -->
+<div class="admin-lock" id="admin-lock">
+  <div class="login-box">
+    <div style="width:52px;height:52px;background:var(--green-bg);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--green-text);margin:0 auto 18px;">
+      <i class="ti ti-package"></i>
+    </div>
+    <h2>Meu Grupo de Compras</h2>
+    <p>Entre como administrador ou acesse como comprador</p>
+    <div style="margin-bottom:10px;">
+      <input class="form-input" type="password" id="login-pw" placeholder="Senha do admin (ex: admin123)" onkeydown="if(event.key==='Enter')loginAdmin()">
+      <p class="login-err" id="login-err">Senha incorreta</p>
+    </div>
+    <button class="btn-primary" style="width:100%;justify-content:center;margin-bottom:10px;" onclick="loginAdmin()">
+      <i class="ti ti-lock-open"></i> Entrar como Admin
+    </button>
+    <button class="btn-cancel" style="width:100%;justify-content:center;" onclick="loginComprador()">
+      <i class="ti ti-eye"></i> Ver meus pedidos
+    </button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon"><i class="ti ti-package"></i></div>
+    <span>Meu Grupo de Compras</span>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="tab-admin" onclick="showView('admin')">
+      <i class="ti ti-layout-dashboard"></i> Admin
+    </button>
+    <button class="nav-tab" id="tab-public" onclick="showView('public')">
+      <i class="ti ti-users"></i> Compradores
+    </button>
+  </div>
+  <div class="header-right">
+    <button class="btn-primary" onclick="openModal()" id="btn-novo">
+      <i class="ti ti-plus"></i> Novo item
+    </button>
+  </div>
+</header>
+
+<!-- ADMIN VIEW -->
+<main id="view-admin">
+  <div class="stats-grid" id="stats-grid"></div>
+  <div id="alert-box"></div>
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <i class="ti ti-search"></i>
+      <input class="search-input" id="search" type="text" placeholder="Buscar por nome ou produto..." oninput="renderTable()">
+    </div>
+    <select class="filter-sel" id="f-status" onchange="renderTable()">
+      <option value="">Todos os status</option>
+      <option value="cotacao">Aguardando cotação de frete</option>
+      <option value="pgto_frete">Aguardando pagamento de frete</option>
+      <option value="enviado">Enviado</option>
+      <option value="entregue">Entregue</option>
+    </select>
+    <select class="filter-sel" id="f-prazo" onchange="renderTable()">
+      <option value="">Todos os prazos</option>
+      <option value="ok">Dentro do prazo</option>
+      <option value="atencao">Atenção (30–45 dias)</option>
+      <option value="vencido">Vencido (+45 dias)</option>
+    </select>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="td-foto">Foto</th>
+          <th class="td-nome">Comprador</th>
+          <th class="td-item">Item</th>
+          <th class="td-valor">Valor</th>
+          <th class="td-chegou">Chegada</th>
+          <th class="td-prazo">Prazo de armazenamento</th>
+          <th class="td-status">Status</th>
+          <th class="td-acao">Ações</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</main>
+
+<!-- PUBLIC VIEW -->
+<main id="view-public" style="display:none;">
+  <div class="pub-header">
+    <div class="pub-header-icon"><i class="ti ti-package"></i></div>
+    <div>
+      <h2>Seus itens armazenados</h2>
+      <p>Os produtos ficam guardados por até 60 dias após a chegada. Retire dentro do prazo!</p>
+    </div>
+  </div>
+
+  <div class="toolbar" style="margin-bottom:20px;">
+    <div class="search-wrap">
+      <i class="ti ti-search"></i>
+      <input class="search-input" id="pub-search" type="text" placeholder="Buscar seu nome ou produto..." oninput="renderPublic()">
+    </div>
+    <select class="filter-sel" id="pub-f-status" onchange="renderPublic()">
+      <option value="">Todos os status</option>
+      <option value="cotacao">Aguardando cotação de frete</option>
+      <option value="pgto_frete">Aguardando pagamento de frete</option>
+      <option value="enviado">Enviado</option>
+    </select>
+  </div>
+
+  <div class="pub-grid" id="pub-grid"></div>
+</main>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" style="display:none;" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">Novo item</span>
+      <button class="modal-close" onclick="closeModal()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <label class="form-label">Nome do comprador *</label>
+        <input class="form-input" id="f-nome" type="text" placeholder="Ex: Ana Lima">
+      </div>
+      <div class="form-row">
+        <label class="form-label">Descrição do item *</label>
+        <input class="form-input" id="f-item" type="text" placeholder="Ex: Tênis Nike Air Max — azul, tam. 38">
+      </div>
+      <div class="form-grid">
+        <div>
+          <label class="form-label">Valor total (R$) *</label>
+          <input class="form-input" id="f-valor" type="number" step="0.01" placeholder="0,00">
+        </div>
+        <div>
+          <label class="form-label">Data de chegada *</label>
+          <input class="form-input" id="f-chegou" type="date">
+        </div>
+      </div>
+      <div class="form-grid">
+        <div>
+          <label class="form-label">Status</label>
+          <select class="form-select" id="f-status-modal">
+            <option value="cotacao">Aguardando cotação de frete</option>
+            <option value="pgto_frete">Aguardando pagamento de frete</option>
+            <option value="enviado">Enviado</option>
+            <option value="entregue">Entregue</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-label">Prazo máx. de armazenamento</label>
+          <select class="form-select" id="f-prazo-max">
+            <option value="45">45 dias</option>
+            <option value="60" selected>60 dias</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Observações</label>
+        <textarea class="form-textarea" id="f-obs" placeholder="Ex: Caixa lacrada, cor azul marinho..."></textarea>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Foto do produto</label>
+        <div class="upload-area" id="upload-area">
+          <input type="file" id="f-foto" accept="image/*" onchange="handlePhoto(event)">
+          <img id="photo-preview" class="preview" alt="preview">
+          <i class="ti ti-photo" id="upload-icon"></i>
+          <p id="upload-text">Clique para adicionar uma foto</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-primary" onclick="saveItem()"><i class="ti ti-device-floppy"></i> Salvar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── SENHA ADMIN ──
+// Para trocar a senha: altere "admin123" para a senha que quiser
+const ADMIN_PASSWORD = "admin123";
+let isAdmin = false;
+
+function loginAdmin() {
+  const pw = document.getElementById('login-pw').value;
+  if (pw === ADMIN_PASSWORD) {
+    isAdmin = true;
+    document.getElementById('admin-lock').style.display = 'none';
+    showView('admin');
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+  }
+}
+
+function loginComprador() {
+  isAdmin = false;
+  document.getElementById('admin-lock').style.display = 'none';
+  document.getElementById('btn-novo').style.display = 'none';
+  document.getElementById('tab-admin').style.display = 'none';
+  showView('public');
+}
+
+// ── DADOS ──
+// Os dados são salvos no localStorage do navegador
+function loadData() {
+  const raw = localStorage.getItem('grupo_compras_items');
+  if (raw) {
+    try { return JSON.parse(raw); } catch(e) { return sampleData(); }
+  }
+  return sampleData();
+}
+
+function saveData() {
+  localStorage.setItem('grupo_compras_items', JSON.stringify(items));
+}
+
+function sampleData() {
+  const hoje = new Date();
+  const sub = (d) => { const r = new Date(hoje); r.setDate(r.getDate()-d); return r.toISOString().split('T')[0]; };
+  return [
+    { id:1, nome:'Ana Lima',       item:'Perfume Chanel Nº5 — 50ml',    valor:520,  chegou:sub(38), status:'cotacao',    prazoMax:60, foto:'', obs:'Caixa lacrada' },
+    { id:2, nome:'Carlos Souza',   item:'Tênis Nike Air Max — branco 42', valor:890, chegou:sub(12), status:'cotacao',    prazoMax:60, foto:'', obs:'' },
+    { id:3, nome:'Fernanda Costa', item:'Bolsa Michael Kors — preta',    valor:1350, chegou:sub(50), status:'pgto_frete', prazoMax:60, foto:'', obs:'Prazo crítico!' },
+    { id:4, nome:'João Pedro',     item:'Óculos Ray-Ban Aviador',        valor:450,  chegou:sub(5),  status:'enviado',    prazoMax:60, foto:'', obs:'' },
+    { id:5, nome:'Maria Silva',    item:'Relógio Fossil Masculino',      valor:780,  chegou:sub(20), status:'pgto_frete', prazoMax:45, foto:'', obs:'' },
+  ];
+}
+
+let items = loadData();
+let nextId = items.reduce((m,i)=>Math.max(m,i.id),0) + 1;
+let editId = null;
+let currentPhoto = '';
+
+// ── UTILS ──
+const today = new Date(); today.setHours(0,0,0,0);
+function daysDiff(d) { return Math.floor((today - new Date(d)) / 86400000); }
+function fmtDate(d) { return new Date(d+'T00:00:00').toLocaleDateString('pt-BR'); }
+function initials(n) { return n.trim().split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase(); }
+function fmtBRL(v) { return 'R$\u00A0' + Number(v).toLocaleString('pt-BR', {minimumFractionDigits:2}); }
+function addDays(d, n) { const r = new Date(d+'T00:00:00'); r.setDate(r.getDate()+n); return r; }
+
+function getPrazo(it) {
+  const dias = daysDiff(it.chegou);
+  const max = it.prazoMax || 60;
+  const pct = Math.min(dias / max * 100, 100);
+  if (dias > max) return { label:`Vencido há ${dias-max}d`, cls:'badge-red', cor:'#C13030', pct:100 };
+  if (dias > max * 0.75) return { label:`${dias}d — ${max-dias}d restantes`, cls:'badge-red', cor:'#C13030', pct };
+  if (dias > max * 0.5) return { label:`${dias}d — ${max-dias}d restantes`, cls:'badge-amber', cor:'#B87010', pct };
+  return { label:`${dias}d de ${max}d`, cls:'badge-gray', cor:'#1D9E75', pct };
+}
+
+function statusBadge(s) {
+  if (s === 'cotacao')    return `<span class="badge badge-amber"><i class="ti ti-calculator" style="font-size:10px"></i> Cotação de frete</span>`;
+  if (s === 'pgto_frete') return `<span class="badge" style="background:#EFF6FF;color:#1E40AF;font-size:11px;font-weight:600;"><i class="ti ti-cash" style="font-size:10px"></i> Pgto. frete</span>`;
+  if (s === 'enviado')    return `<span class="badge badge-green"><i class="ti ti-send" style="font-size:10px"></i> Enviado</span>`;
+  if (s === 'entregue')   return `<span class="badge badge-gray"><i class="ti ti-check" style="font-size:10px"></i> Entregue</span>`;
+  return `<span class="badge badge-amber"><i class="ti ti-clock" style="font-size:10px"></i> ${s}</span>`;
+}
+
+// ── STATS ──
+function renderStats() {
+  const ativos = items.filter(i=>i.status!=='entregue');
+  const vencidos = ativos.filter(i=>daysDiff(i.chegou) > (i.prazoMax||60)).length;
+  const urgentes = ativos.filter(i=>{ const d=daysDiff(i.chegou), m=i.prazoMax||60; return d>m*0.5 && d<=m; }).length;
+  const valorTotal = ativos.reduce((s,i)=>s+Number(i.valor),0);
+
+  document.getElementById('stats-grid').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-icon" style="background:var(--blue-bg);color:var(--blue-text)"><i class="ti ti-package"></i></div>
+      <div class="stat-label">Total em estoque</div>
+      <div class="stat-value">${ativos.length}</div>
+      <div class="stat-sub">${items.filter(i=>i.status==='entregue').length} já entregue(s)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:var(--amber-bg);color:var(--amber-text)"><i class="ti ti-clock"></i></div>
+      <div class="stat-label">Aguardando retirada</div>
+      <div class="stat-value">${items.filter(i=>i.status==='cotacao'||i.status==='pgto_frete').length}</div>
+      <div class="stat-sub">${urgentes} com prazo próximo</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:var(--red-bg);color:var(--red-text)"><i class="ti ti-alert-triangle"></i></div>
+      <div class="stat-label">Prazo vencido</div>
+      <div class="stat-value" style="color:var(--red)">${vencidos}</div>
+      <div class="stat-sub">Contate os compradores</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:var(--green-bg);color:var(--green-text)"><i class="ti ti-currency-dollar"></i></div>
+      <div class="stat-label">Valor armazenado</div>
+      <div class="stat-value" style="color:var(--green);font-size:20px">${fmtBRL(valorTotal)}</div>
+      <div class="stat-sub">itens aguardando</div>
+    </div>`;
+
+  const alertBox = document.getElementById('alert-box');
+  if (vencidos > 0) {
+    alertBox.innerHTML = `<div class="alert"><i class="ti ti-alert-triangle"></i> <strong>${vencidos} item(ns) com prazo vencido</strong> — entre em contato com os compradores para agendar retirada ou envio.</div>`;
+  } else { alertBox.innerHTML = ''; }
+}
+
+// ── TABELA ──
+function getFiltered() {
+  const q = (document.getElementById('search')?.value||'').toLowerCase();
+  const fs = document.getElementById('f-status')?.value||'';
+  const fp = document.getElementById('f-prazo')?.value||'';
+  return items.filter(it => {
+    const matchQ = !q || it.nome.toLowerCase().includes(q) || it.item.toLowerCase().includes(q);
+    const matchS = !fs || it.status === fs;
+    const dias = daysDiff(it.chegou), max = it.prazoMax||60;
+    const matchP = !fp
+      || (fp==='ok' && dias <= max*0.5)
+      || (fp==='atencao' && dias > max*0.5 && dias <= max)
+      || (fp==='vencido' && dias > max);
+    return matchQ && matchS && matchP;
+  });
+}
+
+function renderTable() {
+  const list = getFiltered();
+  const tb = document.getElementById('tbody');
+  if (!list.length) {
+    tb.innerHTML = `<tr><td colspan="8"><div class="empty-state"><i class="ti ti-search"></i><p>Nenhum item encontrado com esses filtros.</p></div></td></tr>`;
+    return;
+  }
+  tb.innerHTML = list.map(it => {
+    const p = getPrazo(it);
+    const photoHtml = it.foto
+      ? `<div class="thumb-wrap"><img src="${it.foto}" alt="foto"></div>`
+      : `<div class="thumb-wrap"><i class="ti ti-photo"></i></div>`;
+    return `<tr>
+      <td class="td-foto">${photoHtml}</td>
+      <td class="td-nome"><span style="display:flex;align-items:center;"><span class="avatar">${initials(it.nome)}</span><span>${it.nome.split(' ')[0]}</span></span></td>
+      <td class="td-item"><span class="item-nome" title="${it.item}">${it.item}</span></td>
+      <td class="td-valor"><span class="mono">${fmtBRL(it.valor)}</span></td>
+      <td class="td-chegou">${fmtDate(it.chegou)}</td>
+      <td class="td-prazo">
+        <div class="prazo-label">${p.label}</div>
+        <div class="prazo-bar"><div class="prazo-fill" style="width:${p.pct}%;background:${p.cor}"></div></div>
+      </td>
+      <td class="td-status">${statusBadge(it.status)}</td>
+      <td class="td-acao">
+        <button class="action-btn" onclick="openModal(${it.id})" title="Editar"><i class="ti ti-edit"></i></button>
+        <button class="action-btn danger" onclick="deleteItem(${it.id})" title="Excluir" style="margin-left:4px"><i class="ti ti-trash"></i></button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ── VIEW PÚBLICA ──
+function renderPublic() {
+  const q = (document.getElementById('pub-search')?.value||'').toLowerCase();
+  const fs = document.getElementById('pub-f-status')?.value||'';
+  const list = items.filter(it => {
+    if (it.status === 'entregue') return false;
+    const matchQ = !q || it.nome.toLowerCase().includes(q) || it.item.toLowerCase().includes(q);
+    const matchS = !fs || it.status === fs;
+    return matchQ && matchS;
+  });
+  const grid = document.getElementById('pub-grid');
+  if (!list.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><i class="ti ti-package-off"></i><p>Nenhum item encontrado.</p></div>`;
+    return;
+  }
+  grid.innerHTML = list.map(it => {
+    const p = getPrazo(it);
+    const limite = addDays(it.chegou, it.prazoMax||60);
+    const dias = daysDiff(it.chegou), max = it.prazoMax||60;
+    const isUrgent = dias > max;
+    const isWarning = dias > max * 0.75 && !isUrgent;
+    const limiteClass = isUrgent ? 'urgent' : isWarning ? 'warning' : '';
+    const photoHtml = it.foto
+      ? `<img src="${it.foto}" alt="foto do produto">`
+      : `<i class="ti ti-photo"></i>`;
+    return `<div class="pub-card">
+      <div class="pub-card-photo">${photoHtml}</div>
+      <div class="pub-card-body">
+        <div class="pub-card-name"><span class="avatar">${initials(it.nome)}</span><span>${it.nome}</span></div>
+        <div class="pub-item-name">${it.item}</div>
+        <div class="pub-meta">
+          <div class="pub-meta-item">
+            <div class="pub-meta-label">Valor</div>
+            <div class="pub-meta-value mono">${fmtBRL(it.valor)}</div>
+          </div>
+          <div class="pub-meta-item">
+            <div class="pub-meta-label">Chegou em</div>
+            <div class="pub-meta-value">${fmtDate(it.chegou)}</div>
+          </div>
+        </div>
+        ${it.obs ? `<div class="pub-obs"><i class="ti ti-notes" style="font-size:14px;flex-shrink:0"></i>${it.obs}</div>` : ''}
+      </div>
+      <div class="pub-card-footer">
+        <div class="deadline-info ${limiteClass}">
+          <i class="ti ti-calendar-due"></i>
+          Retirar até ${fmtDate(limite.toISOString().split('T')[0])}
+        </div>
+        <div style="display:flex;gap:6px;">
+          <span class="badge ${p.cls}" style="font-size:10px;">${p.label}</span>
+          ${statusBadge(it.status)}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── MODAL ──
+function openModal(id=null) {
+  editId = id;
+  currentPhoto = '';
+  const it = id ? items.find(i=>i.id===id) : null;
+  document.getElementById('modal-title').textContent = id ? 'Editar item' : 'Novo item';
+  document.getElementById('f-nome').value = it?.nome || '';
+  document.getElementById('f-item').value = it?.item || '';
+  document.getElementById('f-valor').value = it?.valor || '';
+  document.getElementById('f-chegou').value = it?.chegou || new Date().toISOString().split('T')[0];
+  document.getElementById('f-status-modal').value = it?.status || 'cotacao';
+  document.getElementById('f-prazo-max').value = it?.prazoMax || 60;
+  document.getElementById('f-obs').value = it?.obs || '';
+  const prev = document.getElementById('photo-preview');
+  const icon = document.getElementById('upload-icon');
+  const txt = document.getElementById('upload-text');
+  if (it?.foto) {
+    currentPhoto = it.foto;
+    prev.src = it.foto;
+    prev.style.display = 'block';
+    icon.style.display = 'none';
+    txt.textContent = 'Clique para trocar a foto';
+  } else {
+    prev.style.display = 'none';
+    icon.style.display = 'block';
+    txt.textContent = 'Clique para adicionar uma foto';
+  }
+  document.getElementById('overlay').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('overlay').style.display = 'none';
+  editId = null;
+  currentPhoto = '';
+}
+
+function handlePhoto(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    currentPhoto = ev.target.result;
+    const prev = document.getElementById('photo-preview');
+    prev.src = currentPhoto;
+    prev.style.display = 'block';
+    document.getElementById('upload-icon').style.display = 'none';
+    document.getElementById('upload-text').textContent = 'Clique para trocar a foto';
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveItem() {
+  const nome = document.getElementById('f-nome').value.trim();
+  const item = document.getElementById('f-item').value.trim();
+  const valor = parseFloat(document.getElementById('f-valor').value) || 0;
+  const chegou = document.getElementById('f-chegou').value;
+  const status = document.getElementById('f-status-modal').value;
+  const prazoMax = parseInt(document.getElementById('f-prazo-max').value) || 60;
+  const obs = document.getElementById('f-obs').value.trim();
+
+  if (!nome || !item || !chegou) {
+    alert('Preencha nome, item e data de chegada.');
+    return;
+  }
+
+  if (editId) {
+    const idx = items.findIndex(i => i.id === editId);
+    items[idx] = { ...items[idx], nome, item, valor, chegou, status, prazoMax, obs, foto: currentPhoto };
+  } else {
+    items.push({ id: nextId++, nome, item, valor, chegou, status, prazoMax, obs, foto: currentPhoto });
+  }
+  saveData();
+  closeModal();
+  renderAll();
+}
+
+function deleteItem(id) {
+  if (!confirm('Remover este item do estoque?')) return;
+  items = items.filter(i => i.id !== id);
+  saveData();
+  renderAll();
+}
+
+function renderAll() {
+  renderStats();
+  renderTable();
+}
+
+// ── NAVEGAÇÃO ──
+function showView(v) {
+  document.getElementById('view-admin').style.display  = v === 'admin' ? 'block' : 'none';
+  document.getElementById('view-public').style.display = v === 'public' ? 'block' : 'none';
+  document.getElementById('tab-admin').classList.toggle('active', v === 'admin');
+  document.getElementById('tab-public').classList.toggle('active', v === 'public');
+  if (v === 'public') renderPublic();
+}
+
+// ── INIT ──
+renderAll();
+</script>
+</body>
+</html>
